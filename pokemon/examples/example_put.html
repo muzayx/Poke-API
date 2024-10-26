@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo Atualizar</title>
+    <script>
+        function updatePokemon(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+            const xhttp = new XMLHttpRequest();
+            const url = 'http://localhost/pokemon/api.php?';
+            xhttp.open("PUT", url, true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.onload = function() {
+                if (xhttp.status === 200) {
+                    try {
+                        const result = JSON.parse(xhttp.responseText);
+                        if (result.status === 'success') {
+                            document.getElementById('resultado').innerText = 'Dados do Pokémon atualizados com sucesso!';
+                            document.getElementById('insertForm').reset();
+                        } else {
+                            document.getElementById('resultado').innerText = 'Erro ao atualizar Pokémon: ' + result.message;
+                        }
+                    } catch (e) {
+                        document.getElementById('resultado').innerText = 'Erro ao processar a resposta do servidor.';
+                    }
+                } else {
+                    document.getElementById('resultado').innerText = 'Erro ao comunicar com o servidor.';
+                }
+            };
+            xhttp.onerror = function() {
+                document.getElementById('resultado').innerText = 'Erro na conexão com o servidor.';
+            };
+            const jsonData = JSON.stringify(data);
+            xhttp.send(jsonData);
+        }
+    </script>
+</head>
+<body>
+    <main>
+        <h1>Atualizar Pokémon</h1>
+        <form id="updatetForm" onsubmit="updatePokemon();">
+            <div>
+                <label for="id">ID:</label>
+                <input type="number" id="id" name="id" placeholder="ID do Pokémon" required>
+            </div>
+            <div>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Nome do Pokémon" required>
+            </div>
+            <div>
+                <label for="altura">Altura (m):</label>
+                <input type="number" step="0.1" id="altura" name="altura" placeholder="Altura do Pokémon" required>
+            </div>
+            <div>
+                <label for="peso">Peso (kg):</label>
+                <input type="number" step="0.1" id="peso" name="peso" placeholder="Peso do Pokémon" required>
+            </div>
+            <div>
+                <label for="tipo1">Tipo 1:</label>
+                <select id="tipo1" name="tipo1" required>
+                    <option value="" disabled selected>Tipo Primário do Pokémon</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Fogo">Fogo</option>
+                    <option value="Água">Água</option>
+                    <option value="Grama">Grama</option>
+                </select>
+            </div>
+            <div>
+                <label for="tipo2">Tipo 2 (opcional):</label>
+                <select id="tipo2" name="tipo2">
+                    <option value="" disabled selected>Tipo Secundário do Pokémon</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Fogo">Fogo</option>
+                    <option value="Água">Água</option>
+                    <option value="Grama">Grama</option>
+                </select>
+            </div>
+            <div>
+                <label for="fraquezas">Fraquezas:</label>
+                <input type="text" id="fraquezas" name="fraquezas" placeholder="Fraquezas do Pokémon" required>
+            </div>
+            <div>
+                <label for="pre_evolucao">Pré-evolução (opcional):</label>
+                <input type="text" id="pre_evolucao" name="pre_evolucao" placeholder="Pré-Evolução do Pokémon">
+            </div>
+            <div>
+                <label for="evolucao">Evolução (opcional):</label>
+                <input type="text" id="evolucao" name="evolucao" placeholder="Evolução do Pokémon">
+            </div>
+            <div>
+                <label for="genero">Gênero:</label>
+                <select id="genero" name="genero" required>
+                    <option value="" disabled selected>Gênero do Pokémon</option>
+                    <option value="Macho">Macho</option>
+                    <option value="Fêmea">Fêmea</option>
+                    <option value="Macho e Fêmea">Macho e Fêmea</option>
+                    <option value="Sem Gênero">Sem Gênero</option>
+                </select>
+            </div>
+            <div>
+                <label for="geracao">Geração:</label>
+                <input type="number" id="geracao" name="geracao" placeholder="Geração do Pokémon" required>
+            </div>
+            <div>
+                <label for="regiao">Região:</label>
+                <input type="text" id="regiao" name="regiao" placeholder="Região do Pokémon" required>
+            </div>
+            <div>
+                <label for="imagem_url">URL da Imagem:</label>
+                <input type="text" id="imagem_url" name="imagem_url" placeholder="Link da Imagem" required>
+            </div>
+            <div>
+                <button type="submit">Atualizar Pokémon</button>
+            </div>
+        </form>
+        <div id="resultado"></div>
+    </main>
+</body>
+</html>

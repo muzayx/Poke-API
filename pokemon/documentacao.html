@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação da API Poquedéquis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .pokemon-img {
+            width: 80px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .pokemon-left {
+            left: 10px;
+        }
+
+        .pokemon-right {
+            right: 10px;
+        }
+
+        .copy-button {
+            background-color: #10b981;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #059669;
+            transform: scale(1.05);
+        }
+
+        .pokeball {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(to bottom, #ff0000 50%, #ffffff 50%);
+            border-radius: 50%;
+            position: relative;
+            animation: rotate 3s linear infinite;
+        }
+
+        .pokeball::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background-color: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 50%;
+        }
+        .message {
+            display: none;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-size: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-size: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .json-viewer {
+            white-space: pre-wrap; /* Preserva os espaços em branco e as quebras de linha */
+            background-color: #1a1a1a;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto; /* Permite rolagem horizontal */
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-gray-300 flex flex-col min-h-screen">
+
+    <header
+        class="relative bg-gradient-to-r from-blue-600 to-purple-600 text-white p-5 text-center flex items-center justify-center">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/708.png"
+            alt="poke1" class="pokemon-img mr-6 pokemon-left">
+        <div>
+            <h1 class="text-3xl font-bold mb-2">Documentação da API Poquedéquis</h1>
+            <p class="mt-2 text-xl">Bem-vindo à Poquedéquis API, a melhor e mais simples API sobre Pokémon.</p>
+        </div>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"
+            alt="poke2" class="pokemon-img ml-10 pokemon-right">
+        <a href="index.php"
+            class="fixed bottom-10 right-10 bg-red-500 text-white px-4 py-3 rounded-full shadow-lg transform transition-all duration-300 hover:bg-red-700 hover:scale-110 flex items-center justify-center space-x-2">
+            <span>Sair da Documentação</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+            </svg>
+        </a>
+    </header>
+
+    <div class="flex-1 mt-5 mb-5 flex items-center justify-center">
+        <div class="bg-gray-800 p-7 rounded-lg shadow-lg w-full max-w-4xl transform transition-all duration-300">
+            <main>
+                <section id="overview" class="mb-6 opacity-0">
+                    <h2
+                        class="section-title bg-gradient-to-r from-green-500 to-blue-500 text-white p-3 rounded-md text-xl font-semibold flex items-center">
+                        <div class="pokeball mr-3"></div>
+                        Visão Geral
+                    </h2>
+                    <p class="mt-5">A API é desenvolvida em PHP e oferece acesso completo aos métodos HTTP, com uma base
+                        de dados rica contendo informações sobre 1015 Pokémon.</p>
+                </section>
+
+                <section id="usage" class="mb-6 opacity-0">
+                    <h2
+                        class="section-title bg-gradient-to-r from-yellow-500 to-red-500 text-white p-3 rounded-md text-xl font-semibold flex items-center">
+                        <div class="pokeball mr-3"></div>
+                        Uso e Aplicações
+                    </h2>
+                    <p class="mt-5">A API é ideal para desenvolvedores que desejam criar aplicações relacionadas a
+                        Pokémon, como jogos, aplicativos educativos ou ferramentas de análise.</p>
+                </section>
+
+                <section id="documentation" class="mb-6 opacity-0">
+                    <h2
+                        class="section-title bg-gradient-to-r from-red-500 to-pink-500 text-white p-3 rounded-md text-xl font-semibold flex items-center">
+                        <div class="pokeball mr-3"></div>
+                        Documentação
+                    </h2>
+                    <p class="mt-5">Esta documentação fornece detalhes sobre todos os endpoints disponíveis, parâmetros
+                        de consulta, exemplos de requisição e resposta, e códigos de status.</p>
+                    <a href="Documentação_API.pdf" download="Documentação_API.pdf" class="bg-red-500 text-white p-2 rounded-md mt-4 inline-block w-full text-center">
+                        Baixar Documentação em PDF</a>
+                </section><br>
+
+                <section id="documentation" class="mb-6 opacity-0">
+                    <h2
+                        class="section-title bg-gradient-to-r from-purple-500 to-pink-500 text-white p-3 rounded-md text-xl font-semibold flex items-center">
+                        <div class="pokeball mr-3"></div>
+                        Código Fonte
+                    </h2>
+                    <p class="mt-5">Esta documentação fornece detalhes sobre todos os endpoints disponíveis, parâmetros
+                        de consulta, exemplos de requisição e resposta, e códigos de status.</p>
+                    <a href="pokemon.rar" download="pokemon.rar" class="bg-purple-500 text-white p-2 rounded-md mt-4 inline-block w-full text-center">
+                        Baixar Código Fonte</a>
+                </section><br>
+
+                <section id="database" class="mb-6 opacity-0">
+                    <h2
+                        class="section-title bg-gradient-to-r from-indigo-500 to-blue-500 text-white p-3 rounded-md text-xl font-semibold flex items-center">
+                        <div class="pokeball mr-3"></div>
+                        Database
+                    </h2>
+                    <p class="mt-5">A tabela 'pokemon' armazena dados básicos sobre todos os 1025 Pokémon contendo os
+                        seguintes campos:</p>
+                    <pre class="bg-gray-700 p-3 rounded-md border border-gray-600 mt-2 overflow-x-auto relative">
+                        <code class="text-sm">
+'id' INT PRIMARY KEY, -- Nº da pokédex do Pokémon
+'nome' VARCHAR(100), -- Nome do Pokémon
+'altura' DECIMAL(3,1), -- Altura do Pokémon
+'peso' DECIMAL(5,1), -- Peso do Pokémon
+'tipo1' VARCHAR(20), -- Primeiro tipo do Pokémon
+'tipo2' VARCHAR(20), -- Segundo tipo do Pokémon
+'fraquezas' VARCHAR(255), -- Tipos de ataques que o Pokémon tem fraquezas
+'pre_evolucao' VARCHAR(100), -- Evolução anterior (pode ser nulo)
+'evolucao' VARCHAR(200), -- Próxima evolução (pode ser nulo)
+'genero' VARCHAR(20), -- Gênero do Pokémon
+'geração' INT, -- Geração do Pokémon
+'região' VARCHAR(20), -- Região do Pokémon
+'imagem_url' VARCHAR(255) -- Imagem do Pokémon
+                        </code>
+                        <button class="copy-button text-white bg-green-600 border-none p-2 rounded-md absolute right-2 top-2 hover:bg-green-700" onclick="copyCode(this)">Copiar</button>
+                    </pre>
+                </section>
+
+                <section id="programming" class="mb-6 opacity-0">
+                    <h2
+                        class="section-title bg-gradient-to-r from-red-500 to-yellow-500 text-white mt-10 p-3 mb-8 rounded-md text-xl font-semibold flex items-center">
+                        <div class="pokeball mr-3"></div>
+                        Como Programar
+                    </h2>
+
+                    <h3 class="mt-4 text-lg font-semibold">Início</h3>
+                    <p class="mt-5">Certifique-se de que o arquivo <code
+                            class="bg-gray-700 p-1 rounded-md">bdconnecta.php</code> está presente e corretamente
+                        configurado para conectar ao banco de dados.</p>
+
+                    <h3 class="mt-4 text-lg font-semibold">Banco de Dados</h3>
+                    <p class="mt-5">A tabela <code class="bg-gray-700 p-1 rounded-md">pokemon</code> deve estar criada
+                        no seu banco de dados com a estrutura apropriada.</p>
+
+                    <h3 class="mt-4 text-lg font-semibold">Acesso à API</h3>
+                    <p class="mt-5"> A API será acessada através da URL onde o script está hospedado, por exemplo: <code
+                            class="bg-gray-700 p-1 rounded-md">http://172.16.0.8/22092/api_pokemon.php</code>.</p>
+
+                    <h3 class="mt-12 hr text-2xl font-semibold">Método <span class="text-sky-500">GET</span></h3>
+                    <p class="mt-5">Obtém dados dos Pokémon a partir dos parâmetros fornecidos. Pode retornar todos os
+                        Pokémon ou um subconjunto baseado nos filtros aplicados.</p>
+                    
+                    <br>
+                    <form id="pokemonForm" class="space-y-4">
+                        <div>
+                            <label for="pokemon" class="block mb-1 text-lg font-semibold">Nome do Pokémon:</label>
+                            <input type="text" id="pokemon" name="pokemon" placeholder="ex: pikachu" required
+                                class="w-full p-2 bg-gray-700 rounded text-white">
+                        </div>
+                        <div>
+                            <button type="submit"
+                                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300">Consultar Pokémon</button>
+                        </div>
+                    </form>
+                    <div id="message" class="message mt-4"></div>
+                    <div id="pokemonResult" class="mt-6">
+                        <p id="pokemonLink" class="text-gray-300">Direto link para resultados: <a href="#" id="apiLink"
+                                class="text-blue-400 underline">Nenhum Pokémon consultado ainda</a></p>
+                        <div id="jsonResult" class="json-viewer mt-4 bg-gray-700 p-4 rounded-md border border-gray-600">Nenhum dado JSON exibido ainda.</div>
+                        <button id="downloadBtn"
+                            class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 mt-4"
+                            style="display: none;">Baixar JSON</button>
+                    </div>     
+                    <br><br>                  
+
+                    <pre class="bg-gray-700 p-4 rounded-md border border-gray-600 mt-2 overflow-x-auto relative">
+                        <code class="text-sm">
+GET /api_pokemon.php?id=1&nome=Pikachu&ordenar=nome&direcao=desc
+                        </code>
+                        <button class="copy-button text-white bg-green-600 border-none p-2 rounded-md absolute right-2 top-2 hover:bg-green-700" onclick="copyCode(this)">Copiar</button>
+                    </pre>
+
+                    <h3 class="mt-12 hr text-2xl font-semibold">Método <span class="text-emerald-500">POST</span></h3>
+                    <p class="mt-5">Cria um novo Pokémon na base de dados. Os dados devem ser enviados no corpo da
+                        requisição no formato JSON.</p>
+                    <pre class="bg-gray-700 p-4 rounded-md border border-gray-600 mt-2 overflow-x-auto relative">
+                        <code class="text-sm">
+POST /api_pokemon.php
+{
+    "nome": "Pikachu",
+    "altura": 0.4,
+    "peso": 6.0,
+    "tipo1": "Elétrico",
+    "tipo2": null,
+    "fraquezas": "Terra",
+    "pre_evolucao": null,
+    "evolucao": "Raichu",
+    "genero": "Macho",
+    "geração": 1,
+    "região": "Kanto",
+    "imagem_url": "http://example.com/pikachu.png"
+}
+                        </code>
+                        <button class="copy-button text-white bg-green-600 border-none p-2 rounded-md absolute right-2 top-2 hover:bg-green-700" onclick="copyCode(this)">Copiar</button>
+                    </pre>
+
+                    <h3 class="mt-12 hr text-2xl font-semibold">Método <span class="text-yellow-500">PUT</span></h3>
+                    <p class="mt-5">Atualiza um Pokémon existente com novos dados. Os dados devem ser enviados no corpo
+                        da requisição no formato JSON e devem incluir o id do Pokémon a ser atualizado.</p>
+                    <pre class="bg-gray-700 p-4 rounded-md border border-gray-600 mt-2 overflow-x-auto relative">
+                        <code class="text-sm">
+PUT /api_pokemon.php
+{
+    "id": 1,
+    "nome": "Pikachu",
+    "altura": 0.4,
+    "peso": 6.0,
+    "tipo1": "Elétrico",
+    "tipo2": null,
+    "fraquezas": "Terra",
+    "pre_evolucao": null,
+    "evolucao": "Raichu",
+    "genero": "Macho",
+    "geração": 1,
+    "região": "Kanto",
+    "imagem_url": "http://example.com/pikachu_updated.png"
+}
+                        </code>
+                        <button class="copy-button text-white bg-green-600 border-none p-2 rounded-md absolute right-2 top-2 hover:bg-green-700" onclick="copyCode(this)">Copiar</button>
+                    </pre>
+
+                    <h3 class="mt-12 hr text-2xl font-semibold">Método <span class="text-red-600">DELETE</span></h3>
+                    <p class="mt-5">Deleta um Pokémon da base de dados baseado no ID fornecido. O corpo da requisição
+                        deve conter o id do Pokémon a ser deletado.</p>
+                    <pre class="bg-gray-700 p-4 rounded-md border border-gray-600 mt-2 overflow-x-auto relative">
+                        <code class="text-sm">
+DELETE /api_pokemon.php
+{
+    "id": 1
+}
+                        </code>
+                        <button class="copy-button text-white bg-green-600 border-none p-2 rounded-md absolute right-2 top-2 hover:bg-green-700" onclick="copyCode(this)">Copiar</button>
+                    </pre>
+                </section>
+            </main>
+        </div>
+    </div>
+    <a href="#top"
+        class="fixed bottom-10 right-10 bg-blue-600 text-white px-4 py-3 rounded-full shadow-lg transform transition-all duration-300 hover:bg-blue-700 hover:scale-110 flex items-center justify-center space-x-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </a>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const code = codeBlock.textContent.trim();
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Copiado!';
+                setTimeout(() => button.textContent = 'Copiar', 2000);
+            }).catch(err => {
+                console.error('Erro ao copiar o texto: ', err);
+            });
+        }
+
+        // Animações com GSAP
+        gsap.from("header", { duration: 1, y: -50, opacity: 0, ease: "power3.out" });
+        gsap.from(".pokemon-img", { duration: 1, scale: 0, opacity: 0, ease: "back.out(1.7)", stagger: 0.2 });
+
+        const sections = document.querySelectorAll('section');
+        sections.forEach((section, index) => {
+            gsap.to(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%",
+                    end: "top 50%",
+                    toggleActions: "play none none reverse"
+                },
+                duration: 0.8,
+                opacity: 1,
+                y: 0,
+                ease: "power3.out",
+                delay: index * 0.2
+            });
+        });
+
+        document.getElementById('pokemonForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const pokemonName = document.getElementById('pokemon').value.trim();
+            if (pokemonName) {
+                fetchPokemon(pokemonName);
+            } else {
+                displayMessage('Por favor, insira um nome válido de Pokémon.', 'error');
+            }
+        });
+
+        function fetchPokemon(name) {
+            const url = `http://localhost/pokemon/api.php?nome=${encodeURIComponent(name)}`;
+
+            // Atualiza o hyperlink com a URL da API
+            document.getElementById('apiLink').href = url;
+            document.getElementById('apiLink').textContent = url;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Pokémon não encontrado ou erro na API.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const jsonResultDiv = document.getElementById('jsonResult');
+                    jsonResultDiv.textContent = JSON.stringify(data, null, 2); // Exibe o JSON formatado
+
+                    // Habilita o botão de download
+                    const downloadBtn = document.getElementById('downloadBtn');
+                    downloadBtn.style.display = 'block';
+
+                    // Define o comportamento de download
+                    downloadBtn.onclick = function() {
+                        const jsonBlob = new Blob([JSON.stringify(data, null, 2)], { type: 'text/plain' });
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = URL.createObjectURL(jsonBlob);
+                        downloadLink.download = `${name}.txt`;
+                        downloadLink.click();
+                    };
+
+                    displayMessage('Pokémon encontrado com sucesso!', 'success');
+                })
+                .catch(error => {
+                    displayMessage(error.message, 'error');
+                });
+        }
+
+
+        function displayMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = message;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>

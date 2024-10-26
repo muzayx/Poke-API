@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo Excluir</title>
+    <script>
+        function deletePokemon(id) {
+            event.preventDefault();
+            if (!id) {
+                document.getElementById('resultado').innerHTML = 'Por favor, insira um ID.';
+                return;
+            }
+            const xhttp = new XMLHttpRequest();
+            const url = `http://localhost/pokemon/api.php?id=${id}`;
+            xhttp.open("DELETE", url, true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.onload = function() {
+                if (xhttp.status === 200) {
+                    try {
+                        const result = JSON.parse(xhttp.responseText);
+                        if (result.status === 'success') {
+                            document.getElementById('resultado').innerHTML = 'Pokémon excluído com sucesso!';
+                        } else {
+                            document.getElementById('resultado').innerHTML = 'Erro ao excluir Pokémon: ' + result.message;
+                        }
+                    } catch (e) {
+                        document.getElementById('resultado').innerHTML = 'Erro ao processar a resposta do servidor.';
+                    }
+                } else {
+                    document.getElementById('resultado').innerHTML = 'Erro ao comunicar com o servidor.';
+                }
+            };
+            xhttp.onerror = function() {
+                document.getElementById('resultado').innerHTML = 'Erro na conexão com o servidor.';
+            };
+            xhttp.send();
+        }
+    </script>
+</head>
+<body>
+    <h1>Excluir Pokémon</h1>
+    <form id="deleteForm" onsubmit="deletePokemon(document.getElementById('id').value);">
+        <div>
+            <label for="id">ID do Pokémon:</label>
+            <input type="number" id="id" name="id" placeholder="ID do Pokémon" required>
+        </div>
+        <div>
+            <button type="submit">Excluir Pokémon</button>
+        </div>
+    </form>
+    <div id="resultado"></div>
+</body>
+</html>

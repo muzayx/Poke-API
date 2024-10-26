@@ -1,0 +1,17 @@
+http://localhost/pokemon/api.php?id=1
+http://localhost/pokemon/api.php?nome=Pikachu
+http://localhost/pokemon/api.php?altura=0.6&peso=6.0
+http://localhost/pokemon/api.php?tipo1=eletrico
+http://localhost/pokemon/api.php?fraquezas=Terra&geracao=1
+http://localhost/pokemon/api.php?ordenar=nome&direcao=desc
+http://localhost/pokemon/api.php?delete=1088
+
+curl -X POST "http://localhost/pokemon/api.php" -H "Content-Type: application/json" -d "{\"id\": 1088, \"nome\": \"Bulbasaur\", \"altura\": 0.7, \"peso\": 6.9, \"tipo1\": \"Grama\", \"tipo2\": \"Veneno\", \"fraquezas\": \"Fogo, Psíquico\", \"pre_evolucao\": null, \"evolucao\": \"Ivysaur\", \"genero\": \"Masculino\", \"geracao\": 1, \"regiao\": \"Kanto\", \"imagem_url\": \"http://example.com/bulbasaur.png\"}"
+
+curl -X PUT "http://localhost/pokemon/api.php" -H "Content-Type: application/json" -d "{\"id\": 1088, \"nome\": \"Bulbasaur2\", \"altura\": 0.7, \"peso\": 6.9, \"tipo1\": \"Grama\", \"tipo2\": \"Veneno\", \"fraquezas\": \"Fogo, Psíquico\", \"pre_evolucao\": null, \"evolucao\": \"Ivysaur\", \"genero\": \"Masculino\", \"geracao\": 1, \"regiao\": \"Kanto\", \"imagem_url\": \"http://example.com/bulbasaur.png\"}"
+
+curl -X DELETE "http://localhost/pokemon/api.php?id=1088"
+
+
+
+

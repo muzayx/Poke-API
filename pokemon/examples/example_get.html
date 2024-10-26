@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Exemplo Pesquisa</title>
+        <script>
+            function pesquisarPokemon(id) {
+                event.preventDefault();
+                const encodedId = encodeURIComponent(id);
+                const url = `http://localhost/pokemon/api.php?id=${encodedId}`;
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function() {
+                    console.log('Resposta da API:', this.responseText);
+                    try {
+                        let conteudo = JSON.parse(this.responseText);
+                        let textoPokemon = '';
+                        if (Array.isArray(conteudo) && conteudo.length > 0) {
+                            conteudo.forEach(pokemon => {
+                                textoPokemon = (`Nome: ${pokemon.nome}<br>
+                                                Altura: ${pokemon.altura} m<br>
+                                                Peso: ${pokemon.peso} kg<br>
+                                                Tipo Primário: ${pokemon.tipo1}<br>
+                                                Tipo Secundário: ${pokemon.tipo2 || 'Nenhum'}<br>
+                                                Geração: ${pokemon.geracao}<br>
+                                                Região: ${pokemon.regiao}<br><br>`);
+                            });
+                        } else {
+                            textoPokemon = 'Pokémon não encontrado ou inválido.';
+                        }
+                        document.getElementById('resultado').innerHTML = textoPokemon;
+                    } catch (e) {
+                        console.error('Erro ao processar a resposta JSON:', e);
+                        document.getElementById('resultado').innerHTML = 'Erro ao processar a resposta da API.';
+                    }
+                };
+                xhttp.onerror = function() {
+                    document.getElementById('resultado').innerHTML = 'Erro na conexão com o servidor.';
+                };
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
+        </script>
+    </head>
+    <body>
+        <div class="content">
+            <form method="get" action="#" onsubmit="pesquisarPokemon(document.getElementById('id').value);">
+                <div class="form-group">
+                    <label>ID do Pokémon:</label>
+                    <input name="id" type="number" id="id" value="" size="10">
+                </div>
+                <div class="form-group">
+                    <button type="submit">Pesquisar</button>
+                </div>
+                <div id="resultado"></div>
+            </form>
+        </div>
+    </body>
+</html>
