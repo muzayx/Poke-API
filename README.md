@@ -3,4 +3,5 @@
 
 <h1>Como usar?</h1>
 1. Configuração da Conexão com o Banco de Dados
-Abra o arquivo bdconnecta.php e localize a seguinte linha
+<p>Abra o arquivo bdconnecta.php e localize a seguinte linha:</p>
+-$conn = mysqli_connect("localhost", "root", "", "22092");
