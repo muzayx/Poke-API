@@ -26,3 +26,6 @@ $conn = mysqli_connect("localhost", "root", "", "22092");
 - Vá para a aba Importar e selecione o arquivo pokemon.sql dessa pasta.
 - Clique em "Executar" para importar as tabelas e dados no banco de dados.
 
+<h3>4. Iniciando o Aplicativo</h3>
+
+<p>Após configurar o banco de dados e o ambiente, o aplicativo estará pronto para ser utilizado.</p>
