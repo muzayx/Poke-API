@@ -1,5 +1,5 @@
 <h1>Poke API 🔎</h1>
-<p>Uma API desenvolvida por mim e outros integrantes do meu grupo, que faz a busca de pokemons, e devolve suas respectivas informações.</p>
+<p>Uma API que desenvolvi em colaboração com outros membros do meu grupo, projetada para buscar Pokémon e retornar suas informações detalhadas.</p>
 
 <h1>Como usar?</h1>
 <h3>1. Configuração da Conexão com o Banco de Dados</h3>
