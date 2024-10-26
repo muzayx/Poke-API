@@ -11,7 +11,7 @@ $conn = mysqli_connect("localhost", "root", "", "22092");
 ```
 > [!TIP]
 > <p>Primeiro campo: Substitua "localhost" pelo nome do servidor (normalmente, é localhost)</p>
-> Segundo campo: Substitua "root" pelo usuário do banco de dados.
-> Terceiro campo: Substitua a senha conforme necessário (se não houver senha, deixe em branco).
-> Quarto campo: Substitua "22092" pelo nome do banco de dados que você deseja usar.
+> <p>Segundo campo: Substitua "root" pelo usuário do banco de dados</p>
+> <p>Terceiro campo: Substitua a senha conforme necessário (se não houver senha, deixe em branco)</p>
+> <p>Quarto campo: Substitua "22092" pelo nome do banco de dados que você deseja usar</p>
 
