@@ -6,7 +6,7 @@
 
 <p>Abra o arquivo bdconnecta.php e localize a seguinte linha:</p>
 ```
-$conn = mysqli_connect("localhost", "root", "", "22092");
 
+$conn = mysqli_connect("localhost", "root", "", "22092");
 ```
 
